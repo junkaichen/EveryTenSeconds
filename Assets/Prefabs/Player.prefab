@@ -116,7 +116,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &904300732429841003
@@ -169,8 +169,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStage: 0
-  currentHealth: 6
+  currentHealth: 9
   moveSpeed: 4
+  SpecialEffecting: 0
 --- !u!1 &904300733035719396
 GameObject:
   m_ObjectHideFlags: 0

@@ -73,7 +73,7 @@ public class InGameUI : MonoBehaviour
     IEnumerator LowHealthFirstStage()
     {
         float flashTiming = 0;
-        if (myPlayer.currentHealth <= 4 && myPlayer.currentHealth > 2)
+        if (myPlayer.currentHealth <= 6 && myPlayer.currentHealth > 2)
         {
             flashTiming = 5f;
         }

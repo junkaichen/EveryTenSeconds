@@ -23,7 +23,7 @@ public class SpecialArea : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            myPlayer.currentHealth++;
+            myPlayer.currentHealth += 3;
             myPlayer.SpecialEffecting = true;
             Destroy(gameObject);
         }
