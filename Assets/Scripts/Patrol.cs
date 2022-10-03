@@ -127,6 +127,7 @@ public class Patrol : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             myPlayer.currentHealth -= 4;
+            myPlayer.audioSource.Play();
             shocking = true;
             StartCoroutine(ExitShocking());
             inGameUI.Damaged();

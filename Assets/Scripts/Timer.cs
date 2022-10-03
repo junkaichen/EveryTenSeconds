@@ -32,7 +32,7 @@ public class Timer : MonoBehaviour
             {
                 TimePass = 0f;
                 NextTenSeconds();
-
+                myPlayer.currentHealth--;
                 myPlayer.currentStage++;
                 inGameUI.Damaged();
 
