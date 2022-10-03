@@ -16,6 +16,7 @@ public class InGameUI : MonoBehaviour
 
     [SerializeField] Image CurrentImage;
     [SerializeField] Image DamagedEffect;
+    public Image LowHealth;
     private Player myPlayer;
     private void Start()
     {
@@ -58,7 +59,38 @@ public class InGameUI : MonoBehaviour
     IEnumerator Hurting()
     {
         DamagedEffect.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
         DamagedEffect.gameObject.SetActive(false);
+    }
+
+    public void LowHealthing()
+    {
+       
+        StartCoroutine(LowHealthFirstStage());
+        
+    }
+
+    IEnumerator LowHealthFirstStage()
+    {
+        float flashTiming = 0;
+        if (myPlayer.currentHealth <= 4 && myPlayer.currentHealth > 2)
+        {
+            flashTiming = 5f;
+        }
+        else 
+        {
+            flashTiming = 1f;
+        }
+        StartCoroutine(LowHealthFirstStage2());
+        yield return new WaitForSeconds(flashTiming);
+        StartCoroutine(LowHealthFirstStage());
+    }
+    IEnumerator LowHealthFirstStage2()
+    {
+
+        LowHealth.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        LowHealth.gameObject.SetActive(false);
+
     }
 }

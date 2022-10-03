@@ -7,22 +7,30 @@ public class Player : MonoBehaviour
 {
     public int currentStage = 0;
     public int currentHealth = 6;
+    private bool highHealth = true;
     private bool isDead = false;
     [SerializeField] float moveSpeed = 1f;
-    
+    public bool SpecialEffecting = false;
     private Vector2 moveInput;
     private Rigidbody2D rb;
-    
+    private InGameUI inGameUI;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        inGameUI = FindObjectOfType<InGameUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
         BecomeDead();
+        if (currentHealth <= 4 && highHealth)
+        {
+            highHealth = false;
+            inGameUI.LowHealthing();
+        }
     }
 
     void FixedUpdate()
@@ -53,6 +61,8 @@ public class Player : MonoBehaviour
     {
         return isDead;
     }
+
+    
 
 
 }

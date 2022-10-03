@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class SpecialArea : MonoBehaviour
 {
-
+    Player myPlayer;
     // Start is called before the first frame update
     void Start()
     {
+        myPlayer = FindObjectOfType<Player>();
         StartCoroutine(DestroySelf());
+        myPlayer.SpecialEffecting = false;
     }
 
     IEnumerator DestroySelf()
@@ -21,8 +23,8 @@ public class SpecialArea : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Player myPlayer = FindObjectOfType<Player>();
             myPlayer.currentHealth++;
+            myPlayer.SpecialEffecting = true;
             Destroy(gameObject);
         }
     }

@@ -9,9 +9,10 @@ public class Patrol : MonoBehaviour
     public GameObject myWayPoint;
     private Transform[] _waypoints = new Transform[4];
     private int _currentWaypointIndex = 0;
-    private float moveSpeed = 2f;
+    private float moveSpeed = 3.2f;
     private Rigidbody2D myrigidbody2D;
     private bool huntering = false;
+    private bool shocking = false;
     private Player myPlayer;
     private InGameUI inGameUI;
     private SpecialArea specialArea;
@@ -31,38 +32,46 @@ public class Patrol : MonoBehaviour
 
     private void Update()
     {
-        specialArea = FindObjectOfType<SpecialArea>();
-        if (specialArea)
-        {
-            moveSpeed = 3.5f;
-        }
-        else
+        if (myPlayer.SpecialEffecting)
         {
             moveSpeed = 2;
         }
-            checkRange();
-        if (huntering)
+/*        else if (shocking)
         {
-            transform.up = myPlayer.transform.position.normalized;
-            transform.position = Vector2.MoveTowards(transform.position, myPlayer.transform.position, moveSpeed * Time.deltaTime);
-        }
+            moveSpeed = 0;
+        }*/
         else
         {
-            Transform wp = _waypoints[_currentWaypointIndex].transform;
-            if (Vector2.Distance(transform.position, wp.position) < 0.1f)
-            {
+            moveSpeed = 3.2f;
+        }
 
-                _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
+        checkRange();
+        if (!shocking)
+        {
+            if (huntering)
+            {
+                transform.up = myPlayer.transform.position.normalized;
+                transform.position = Vector2.MoveTowards(transform.position, myPlayer.transform.position, moveSpeed * Time.deltaTime);
             }
             else
             {
-                /*myrigidbody2D.velocity = (wp.position - transform.position).normalized * moveSpeed;*/
-                transform.up = wp.position.normalized;
-                transform.position = Vector2.MoveTowards(transform.position, wp.position, moveSpeed * Time.deltaTime);
-                /*transform.LookAt(wp.position);*/
-            }
+                Transform wp = _waypoints[_currentWaypointIndex].transform;
+                if (Vector2.Distance(transform.position, wp.position) < 0.1f)
+                {
 
+                    _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
+                }
+                else
+                {
+                    /*myrigidbody2D.velocity = (wp.position - transform.position).normalized * moveSpeed;*/
+                    transform.up = wp.position.normalized;
+                    transform.position = Vector2.MoveTowards(transform.position, wp.position, moveSpeed * Time.deltaTime);
+                    /*transform.LookAt(wp.position);*/
+                }
+
+            }
         }
+       
         
     }
 
@@ -94,8 +103,9 @@ public class Patrol : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Debug.Log(myPlayer.currentHealth);
-            myPlayer.currentHealth -= 3;
+            myPlayer.currentHealth -= 4;
+            shocking = true;
+            StartCoroutine(ExitShocking());
             inGameUI.Damaged();
             if (myPlayer.IsDead())
             {
@@ -103,6 +113,13 @@ public class Patrol : MonoBehaviour
             }
         }
     }
+
+    IEnumerator ExitShocking()
+    {
+        yield return new WaitForSeconds(2f);
+        shocking = false;
+    }
+
 
 
 
