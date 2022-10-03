@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private InGameUI inGameUI;
     private Animator animator;
     Vector2 playerVelocity;
-    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {

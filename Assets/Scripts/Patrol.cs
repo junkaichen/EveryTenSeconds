@@ -17,10 +17,12 @@ public class Patrol : MonoBehaviour
     private InGameUI inGameUI;
     private SpecialArea specialArea;
     private Animator animator;
+    private AudioSource audioSource;
     private void Awake()
     {
         SpawnWayPoints();
         myrigidbody2D = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
 
 
     }
@@ -127,10 +129,11 @@ public class Patrol : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             myPlayer.currentHealth -= 4;
-            myPlayer.audioSource.Play();
+         
             shocking = true;
             StartCoroutine(ExitShocking());
             inGameUI.Damaged();
+            audioSource.Play();
             if (myPlayer.IsDead())
             {
                 Destroy(myPlayer.gameObject);
