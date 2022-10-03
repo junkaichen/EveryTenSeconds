@@ -5,8 +5,9 @@ using UnityEngine;
 public class Respawner : MonoBehaviour
 {
     private BoxCollider2D spawnArea;
-    [SerializeField] SpecialArea prefab;
-    [SerializeField] int amount = 1;
+    [SerializeField] SpecialArea specialArea;
+    [SerializeField] Ghost ghost;
+    [SerializeField] int ghostAmount = 1;
 
     void Awake()
     {
@@ -15,21 +16,34 @@ public class Respawner : MonoBehaviour
 
     private void Start()
     {
-        SpawnItems();
+        StartCoroutine(SpawnItems());
     }
 
 
-    private void SpawnItems()
+    IEnumerator SpawnItems()
     {
-        // Bounds Represents an axis aligned bounding box.
+        SpawnSpecialArea();
+        SpawnGhost();
+        yield return new WaitForSeconds(10);
+        StartCoroutine(SpawnItems());
+
+
+    }
+
+    private void SpawnSpecialArea()
+    {
         Bounds bounds = spawnArea.bounds;
-        for (int i = 0; i < amount; i++)
-        {
-            Vector2 position = Vector2.zero;
-            // Round these position value to whole value, so they will align perfectly to a grid
-            position.x = Mathf.Round(Random.Range(bounds.min.x, bounds.max.x));
-            position.y = Mathf.Round(Random.Range(bounds.min.y, bounds.max.y));
-            Instantiate(prefab, position, Quaternion.identity);
-        }
+        Vector2 position = Vector2.zero;
+        position.x = Mathf.Round(Random.Range(bounds.min.x, bounds.max.x));
+        position.y = Mathf.Round(Random.Range(bounds.min.y, bounds.max.y));
+        Instantiate(specialArea, position, Quaternion.identity);
+    }
+    private void SpawnGhost()
+    {
+        Bounds bounds = spawnArea.bounds;
+        Vector2 position = Vector2.zero;
+        position.x = Mathf.Round(Random.Range(bounds.min.x, bounds.max.x));
+        position.y = Mathf.Round(Random.Range(bounds.min.y, bounds.max.y));
+        Instantiate(ghost, position, Quaternion.identity);
     }
 }

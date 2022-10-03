@@ -5,8 +5,11 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    public int currentStage = 0;
+    public int currentHealth = 6;
+    private bool isDead = false;
     [SerializeField] float moveSpeed = 1f;
-    [SerializeField] int maxHealth = 100;
+    
     private Vector2 moveInput;
     private Rigidbody2D rb;
     
@@ -19,7 +22,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        BecomeDead();
     }
 
     void FixedUpdate()
@@ -35,12 +38,21 @@ public class Player : MonoBehaviour
 
     public void SpeedUp()
     {
-        moveSpeed = moveSpeed + 2f;
+        moveSpeed = moveSpeed + 1f;
     }
 
-
-    public void SpeedNormal()
+    public void BecomeDead()
     {
-        moveSpeed = moveSpeed - 5f;
+        if (currentHealth <= 0)
+        {
+            isDead = true;
+        }
     }
+
+    public bool IsDead()
+    {
+        return isDead;
+    }
+
+
 }

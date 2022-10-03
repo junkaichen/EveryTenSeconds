@@ -10,11 +10,13 @@ public class Timer : MonoBehaviour
     [SerializeField] float TimePass = 0;
     [SerializeField] TextMeshProUGUI TimerText;
     [SerializeField] SpriteMask mySpriteMask;
+    private InGameUI inGameUI;
     private Player myPlayer;
     // Start is called before the first frame update
     void Start()
     {
         myPlayer = FindObjectOfType<Player>();
+        inGameUI = FindObjectOfType<InGameUI>();
     }
 
     // Update is called once per frame
@@ -24,6 +26,8 @@ public class Timer : MonoBehaviour
         {
             TimePass = 0f;
             NextTenSeconds();
+            myPlayer.currentStage++;
+            inGameUI.Damaged();
 
 
         }
@@ -34,7 +38,6 @@ public class Timer : MonoBehaviour
     void UpdateTimer(float currentTime)
     {
         currentTime += 1;
-      /*  float minutes = Mathf.FloorToInt(currentTime / 60);*/
         float seconds = Mathf.FloorToInt(currentTime % 60);
         TimerText.text = string.Format("{00}", seconds);
     }
