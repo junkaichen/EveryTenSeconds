@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI currentHealthtext;
     public int currentStage = 0;
     public int currentHealth = 6;
     private bool highHealth = true;
@@ -28,7 +30,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        currentHealthtext.text = "Health: " + currentHealth;
         /*        if (moveInput != Vector2.zero)
                 {s
                     animator.SetBool("isMoving", false);
