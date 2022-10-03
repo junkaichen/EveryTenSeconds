@@ -16,11 +16,12 @@ public class Patrol : MonoBehaviour
     private Player myPlayer;
     private InGameUI inGameUI;
     private SpecialArea specialArea;
+    private Animator animator;
     private void Awake()
     {
         SpawnWayPoints();
         myrigidbody2D = GetComponent<Rigidbody2D>();
-        
+
 
     }
 
@@ -28,18 +29,40 @@ public class Patrol : MonoBehaviour
     {
         myPlayer = FindObjectOfType<Player>();
         inGameUI = FindObjectOfType<InGameUI>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+
+        Vector3 myDirection = myPlayer.transform.position - transform.position;
+        if (Mathf.Abs(myDirection.y) > Mathf.Abs(myDirection.x))
+        {
+            animator.SetFloat("verticalMovement", 1f);
+        }
+        else
+        {
+            if (myDirection.x > 0)
+            {
+                    animator.SetFloat("horizontalMovement", 1f);
+            }
+            else
+            {
+                animator.SetFloat("horizontalMovement", -1f);
+
+
+            }
+        }
+
+       
         if (myPlayer.SpecialEffecting)
         {
             moveSpeed = 2;
         }
-/*        else if (shocking)
-        {
-            moveSpeed = 0;
-        }*/
+        /*        else if (shocking)
+                {
+                    moveSpeed = 0;
+                }*/
         else
         {
             moveSpeed = 3.2f;
@@ -50,7 +73,7 @@ public class Patrol : MonoBehaviour
         {
             if (huntering)
             {
-     /*           transform.up = myPlayer.transform.position.normalized;*/
+                /*           transform.up = myPlayer.transform.position.normalized;*/
                 transform.position = Vector2.MoveTowards(transform.position, myPlayer.transform.position, moveSpeed * Time.deltaTime);
             }
             else
@@ -64,22 +87,22 @@ public class Patrol : MonoBehaviour
                 else
                 {
                     /*myrigidbody2D.velocity = (wp.position - transform.position).normalized * moveSpeed;*/
-              /*      transform.up = wp.position.normalized;*/
+                    /*      transform.up = wp.position.normalized;*/
                     transform.position = Vector2.MoveTowards(transform.position, wp.position, moveSpeed * Time.deltaTime);
                     /*transform.LookAt(wp.position);*/
                 }
 
             }
         }
-       
-        
+
+
     }
 
     private void SpawnWayPoints()
     {
         for (int i = 0; i < 4; i++)
         {
-            
+
             Vector2 position = Vector2.zero;
             position.x = Mathf.Round(Random.Range(-17, 17));
             position.y = Mathf.Round(Random.Range(-12, 12));

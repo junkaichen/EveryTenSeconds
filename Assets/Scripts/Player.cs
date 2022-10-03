@@ -27,11 +27,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-/*        if (moveInput != Vector2.zero)
-        {
-            animator.SetBool("isMoving", false);
-        }*/
-
+        /*        if (moveInput != Vector2.zero)
+                {
+                    animator.SetBool("isMoving", false);
+                }*/
         BecomeDead();
         if (currentHealth <= 6 && highHealth)
         {
@@ -73,7 +72,7 @@ public class Player : MonoBehaviour
 
     public void SpeedUp()
     {
-        moveSpeed = moveSpeed + 2f;
+        moveSpeed = moveSpeed + 1.5f;
     }
 
     public void BecomeDead()
@@ -88,6 +87,8 @@ public class Player : MonoBehaviour
     {
         return isDead;
     }
+
+
 
     
 
