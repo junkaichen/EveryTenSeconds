@@ -15,7 +15,7 @@ public class SpecialArea : MonoBehaviour
 
     IEnumerator DestroySelf()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(6);
         Destroy(gameObject);
     }
 
