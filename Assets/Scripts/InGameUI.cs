@@ -26,7 +26,6 @@ public class InGameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(myPlayer.currentStage);
         switch (myPlayer.currentStage)
         {
             case 1:

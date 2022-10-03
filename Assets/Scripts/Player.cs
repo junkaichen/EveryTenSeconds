@@ -25,8 +25,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(currentHealth);
         BecomeDead();
-        if (currentHealth <= 4 && highHealth)
+        if (currentHealth <= 6 && highHealth)
         {
             highHealth = false;
             inGameUI.LowHealthing();
@@ -46,7 +47,7 @@ public class Player : MonoBehaviour
 
     public void SpeedUp()
     {
-        moveSpeed = moveSpeed + 1f;
+        moveSpeed = moveSpeed + 2f;
     }
 
     public void BecomeDead()
