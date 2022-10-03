@@ -14,35 +14,61 @@ public class Player : MonoBehaviour
     private Vector2 moveInput;
     private Rigidbody2D rb;
     private InGameUI inGameUI;
-
+    private Animator animator;
+    Vector2 playerVelocity;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         inGameUI = FindObjectOfType<InGameUI>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(currentHealth);
+/*        if (moveInput != Vector2.zero)
+        {
+            animator.SetBool("isMoving", false);
+        }*/
+
         BecomeDead();
         if (currentHealth <= 6 && highHealth)
         {
             highHealth = false;
             inGameUI.LowHealthing();
         }
+        if (moveInput != Vector2.zero)
+        {
+            playerVelocity = new Vector2(moveInput.x * moveSpeed, moveInput.y * moveSpeed);
+            rb.velocity = playerVelocity;
+            animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            playerVelocity = new Vector2(0f, 0f);
+            rb.velocity = playerVelocity;
+            animator.SetBool("isMoving", false);
+        }
     }
 
     void FixedUpdate()
     {
-        
-        rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
+
+     /*   rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);*/
     }
 
     void OnMove(InputValue value)
     {
+      /*  animator.SetBool("isMoving", true);*/
         moveInput = value.Get<Vector2>();
+        if (moveInput != Vector2.zero)
+        {
+            animator.SetFloat("horizontalMovement", moveInput.x);
+            animator.SetFloat("verticalMovement", moveInput.y);
+        }
+ 
+        
     }
 
     public void SpeedUp()

@@ -50,7 +50,7 @@ public class Patrol : MonoBehaviour
         {
             if (huntering)
             {
-                transform.up = myPlayer.transform.position.normalized;
+     /*           transform.up = myPlayer.transform.position.normalized;*/
                 transform.position = Vector2.MoveTowards(transform.position, myPlayer.transform.position, moveSpeed * Time.deltaTime);
             }
             else
@@ -64,7 +64,7 @@ public class Patrol : MonoBehaviour
                 else
                 {
                     /*myrigidbody2D.velocity = (wp.position - transform.position).normalized * moveSpeed;*/
-                    transform.up = wp.position.normalized;
+              /*      transform.up = wp.position.normalized;*/
                     transform.position = Vector2.MoveTowards(transform.position, wp.position, moveSpeed * Time.deltaTime);
                     /*transform.LookAt(wp.position);*/
                 }
